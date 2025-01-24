@@ -27,3 +27,6 @@ Route::patch('/tasks/{id}', [TaskController::class, 'update']);
 
 // Route to get all pending tasks
 Route::get('/tasks/pending', [TaskController::class, 'pending']);
+
+// Route to get all tasks
+Route::get('/tasks', [TaskController::class, 'index']);

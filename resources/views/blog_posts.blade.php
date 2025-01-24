@@ -1,37 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<h2>Blog Post CRUD</h2>
-<form id="createPostForm" class="mb-4">
-    <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Enter post title">
-    </div>
-    <div class="mb-3">
-        <label for="content" class="form-label">Content</label>
-        <textarea class="form-control" id="content" name="content" rows="3" placeholder="Enter post content"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Create Post</button>
-</form>
+<h2 class="mb-4">Blog Post Management</h2>
 
+<!-- Create Post Form -->
+<div class="card mb-4">
+    <div class="card-header">Create a New Blog Post</div>
+    <div class="card-body">
+        <form id="createPostForm">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Enter post title">
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Content</label>
+                <textarea class="form-control" id="content" name="content" rows="3" placeholder="Enter post content"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Post</button>
+        </form>
+    </div>
+</div>
+
+<!-- List of Blog Posts -->
 <h3>All Blog Posts</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Created At</th>
-        </tr>
-    </thead>
-    <tbody id="postsTable">
-        <!-- Posts will be dynamically added here -->
-    </tbody>
-</table>
+<div id="postsList" class="row">
+    <!-- Dynamic content goes here -->
+</div>
 
 <script>
     const form = document.getElementById('createPostForm');
-    const postsTable = document.getElementById('postsTable');
+    const postsList = document.getElementById('postsList');
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -53,13 +51,16 @@
         const response = await fetch('/api/posts');
         const posts = await response.json();
 
-        postsTable.innerHTML = posts.map(post => `
-            <tr>
-                <td>${post.id}</td>
-                <td>${post.title}</td>
-                <td>${post.content}</td>
-                <td>${post.created_at}</td>
-            </tr>
+        postsList.innerHTML = posts.map(post => `
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">${post.title}</h5>
+                        <p class="card-text">${post.content}</p>
+                        <small class="text-muted">Created at: ${new Date(post.created_at).toLocaleString()}</small>
+                    </div>
+                </div>
+            </div>
         `).join('');
     }
 

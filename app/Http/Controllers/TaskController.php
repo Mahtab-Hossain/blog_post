@@ -8,6 +8,11 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
+
+    public function index()
+    {
+        return response()->json(Task::all());
+    }
     // Method to create a new task
     public function store(Request $request)
     {
@@ -30,6 +35,8 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
 
         // Update the task with the request data
+        $task->is_completed = $request->is_completed;
+        $task->save();
         $task->update($request->all());
 
         // Return the updated task as JSON
