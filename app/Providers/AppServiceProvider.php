@@ -21,11 +21,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //Load The API Routes
         $this->loadRoutes();
     }
 
     protected function loadRoutes()
     {
+        // Define the prefix and middleware for API routes
         Route::prefix('api')
             ->middleware('api')
             ->group(base_path('routes/api.php'));

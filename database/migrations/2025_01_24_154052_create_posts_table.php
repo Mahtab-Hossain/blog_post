@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create the posts table
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
@@ -24,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Drop the posts table
         Schema::dropIfExists('posts');
     }
 };

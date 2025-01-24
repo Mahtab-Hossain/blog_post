@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //Create the task table
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
@@ -23,7 +24,7 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
+    {   //Drop the task table
         Schema::dropIfExists('tasks');
     }
 };

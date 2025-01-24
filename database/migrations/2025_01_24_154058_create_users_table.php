@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create the users table   
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -25,6 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Drop the users table
         Schema::dropIfExists('users');
     }
 };
