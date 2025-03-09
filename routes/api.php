@@ -6,11 +6,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
 
 // Route to create a new blog post
-
 Route::post('/posts', [PostController::class, 'store']);
 
 // Route to list all blog posts
-
 Route::get('/posts', [PostController::class, 'index']);
 
 // Route to view a single blog post by ID

@@ -16,7 +16,11 @@
         footer {
             background-color: #343a40;
             color: white;
-            padding: 15px 0;
+            /* padding: 15px 0; */
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
         }
         footer a {
             color: #f8f9fa;
@@ -48,6 +52,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/tasks') }}">Tasks</a>
                     </li>
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="nav-link btn btn-link" style="text-decoration: none;">Logout</button>
+                            </form>
+                        </li>
+                    @endguest
                 </ul>
             </div>
         </div>
@@ -59,7 +75,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="text-center mt-5">
+    <footer class="text-center mt-5 ">
         <div class="container">
             <p>&copy; {{ date('Y') }} Blogy. All Rights Reserved.</p>
             <p>Made by Md. Mahtab Hossain Bhuiyan</p>
@@ -71,4 +87,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

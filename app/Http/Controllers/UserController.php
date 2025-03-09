@@ -6,27 +6,38 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-
 class UserController extends Controller
 {
-    // Method to register a new user
     public function register(Request $request)
     {
-        // Validate the request data
-        $request->validate([
-            'name' => 'required|string|min:3',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|min:3',
+                'email' => 'required|string|email|unique:users',
+                'password' => 'required|string|min:8',
+            ]);
 
-        // Create a new user with the validated data and hash the password
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+            ]);
 
-        // Return the created user as JSON with a 201 status code
-        return response()->json($user, 201);
+            return response()->json([
+                'message' => 'Registration successful',
+                'user' => $user
+            ], 201);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Registration failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
